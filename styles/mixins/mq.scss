@@ -1,0 +1,40 @@
+@import "./media_queries";
+
+/// Breakpoint list
+$breakpoints: (
+        s: 320px,
+        m: 768px,
+        l: 1024px
+);
+
+/// Breakpoint keys list
+$breakpoint-list: 's', 'm', 'l';
+
+
+/// Apply styles only if viewport width is equal to or less than $breakpoint
+/// @param {String} $breakpoint - breakpoint name
+/// @example scss
+/// .element {
+///   @include bp-min(s)
+///     color: red;
+///   }
+/// }
+@mixin bp-min($breakpoint) {
+  @include min-screen(map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+/// Apply styles only if viewport width is equal to or narrower than $breakpoint
+/// @param {String} $breakpoint - breakpoint name
+/// @example scss
+/// .element {
+///   @include bp-max(s) {
+///     color: blue;
+///   }
+/// }
+@mixin bp-max($breakpoint) {
+  @include max-screen(map-get($breakpoints, $breakpoint) - 1) {
+    @content;
+  }
+}
