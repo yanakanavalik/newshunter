@@ -14,13 +14,19 @@
 }
 
 @import "./mixins/mq";
+@import "./mixins/media_queries";
 @import "~bootstrap/scss/bootstrap";
 @import "./header/index";
 @import "./main/search-section";
 @import "./main/search-results";
 @import "./main/news-predefined";
+@import "./footer/index";
 
-html, body, main {
+body {
+  margin: 0;
+}
+
+html, main {
   margin: 0;
   height: 100%;
   width: 100%;

@@ -4,12 +4,11 @@
 .search-channel {
   position: relative;
   z-index: 1;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-size: cover;
 
   &__form {
     flex-direction: column;
@@ -52,7 +51,7 @@
   }
 }
 
-.btn-go {
+.btn-go, .button-sort, .btn__modal-toggle {
   color: #fff;
   background-color: darkcyan;
   border-color: darkcyan;

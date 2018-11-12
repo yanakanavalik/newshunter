@@ -1,8 +1,37 @@
 require('bootstrap');
 import '../styles/index.scss';
-import './scroll';
+
+const prepareModal = (article) => {
+    const setModal = () => {
+        if (article.title) document.getElementById('contentModalTitle').innerHTML = article.title;
+        if (article.content) document.getElementById('contentModalBody').innerHTML = article.content;
+        if (article.url) document.getElementById('contentModalLink').setAttribute('href', article.url);
+    };
+
+    const btnToggleModals = document.getElementsByClassName('btn__modal-toggle');
+
+    const btnsToggle = Array.from(btnToggleModals);
+
+    btnsToggle.forEach( item => {
+        item.addEventListener('click', setModal)
+    });
+};
+
+const sortBtnHandler = (e) => {
+    const value = e.target.value;
+
+    fetchNewsChannel(sessionStorage.getItem('chosen_channel'), value)
+};
 
 document.getElementById('channelForm').addEventListener('submit', choseChannel);
+
+const btnSort = document.getElementsByClassName('button-sort');
+
+const buttons = Array.from(btnSort);
+
+buttons.map( item => {
+    item.addEventListener('click', sortBtnHandler)
+});
 
 function choseChannel(e) {
     e.preventDefault();
@@ -39,24 +68,33 @@ const fetchNewsChannel = (channelName, sortBy='publishedAt', endpoint='everythin
 };
 
 const fillTextBlock = (node, data) => {
-    console.log(data);
-
-    node.children[0].innerHTML = data.title;
-    node.children[1].innerHTML = data.description;
-    node.children[4].innerHTML = data.author;
-    node.children[5].innerHTML = data.publishedAt;
-
-    document.getElementsByClassName('modal')[0].classList.toggle('fade');
+    if (data.title) node.children[0].innerHTML = data.title;
+    if (data.description) node.children[1].innerHTML = data.description;
+    if (data.author) node.children[4].innerHTML = data.author;
+    if (data.publishedAt) node.children[5].innerHTML = data.publishedAt;
 };
 
 const createResultNodes = ({ articles }) => {
     if (!articles) throw new Error('There is no data');
 
-    const resultsSection = document.getElementsByClassName('search-results')[0];
+    let resultsSection = document.getElementsByClassName('search-results')[0];
     const newsBlock = document.getElementsByClassName('search-results__block')[0];
 
+    while (resultsSection.children.length !== 3) {
+        resultsSection.removeChild(resultsSection.lastChild);
+    }
+
+    articles.map( (article, i)=> {
+        const cloneNewsBlock = newsBlock.cloneNode(true);
+
+        if (i === 1) resultsSection.removeChild(newsBlock);
+
+        resultsSection.appendChild(cloneNewsBlock);
+
+        fillTextBlock(cloneNewsBlock, article);
+
+        prepareModal(article);
+    });
+
     resultsSection.style.display= 'block';
-
-    fillTextBlock(newsBlock, articles[0]);
 };
-
