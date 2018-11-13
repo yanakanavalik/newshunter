@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "Nunito-Bold";
+  src : url(../asserts/fonts/Nunito-Bold.ttf);
+}
+
+@font-face {
+  font-family: "Nunito-Regular";
+  src : url(../asserts/fonts/Nunito-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Nunito-SemiBold";
+  src : url(../asserts/fonts/Nunito-SemiBold.ttf);
+}
+
+@import "./mixins/mq";
+@import "./mixins/media_queries";
+@import "~bootstrap/scss/bootstrap";
+@import "./header/index";
+@import "./main/search-section";
+@import "./main/search-results";
+@import "./main/news-predefined";
+@import "./footer/index";
+
+body {
+  margin: 0;
+}
+
+html, main {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.search-channel:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .4;
+  z-index: -1;
+  background: url("../asserts/searchchannelsBg.jpg");
+  background-size: cover;
+}
