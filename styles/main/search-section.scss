@@ -1,0 +1,65 @@
+@import "../mixins/mq";
+@import "../mixins/media_queries";
+
+.search-channel {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__form {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    height: 100%;
+
+    &-label {
+      font-size: 1.9em;
+      font-family: Nunito-Bold, sans-serif;
+
+      @include bp-min(m) {
+        font-size: 2.4em;
+      }
+    }
+
+    &-wrapper {
+      height: 250px;
+      margin-top: 140px;
+
+      @include bp-min(m) {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.custom-select {
+  margin: 0 !important;
+  cursor: pointer;
+  background: white;
+
+  @include bp-min(m) {
+    width: 250px;
+  }
+
+  & > option {
+    cursor: pointer;
+  }
+}
+
+.btn-go, .button-sort{
+  color: #fff;
+  background-color: darkcyan;
+  border-color: darkcyan;
+
+  &:hover {
+    color: lightcyan;
+    background-color: darkslategray;
+    border-color: darkslategray;
+    outline: darkcyan;
+  }
+}
