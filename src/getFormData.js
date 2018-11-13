@@ -10,7 +10,7 @@ const choseChannel = (e) => {
 
     localStorage.setItem('chosen_channel', channel);
 
-    fetchNewsChannel(channel);
+    fetchNewsChannel({channelName:channel});
 };
 
 
