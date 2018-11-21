@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: ['./src/index.js'],
+    entry: ["@babel/polyfill", 'whatwg-fetch', './src/index.js'],
     devServer: {
         contentBase: './dist',
         hot: true
@@ -25,6 +25,17 @@ module.exports = {
     ],
     module: {
         rules: [
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-proposal-object-rest-spread']
+                    }
+                }
+            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
@@ -56,7 +67,8 @@ module.exports = {
                         name: "images/[name].[ext]"
                     }
                 }]
-            }],
+            }
+        ],
     },
     watchOptions: {
         aggregateTimeout: 300,
@@ -69,5 +81,4 @@ module.exports = {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist')
     }
-}
-;
+};
