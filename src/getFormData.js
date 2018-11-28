@@ -1,16 +1,30 @@
-import fetchNewsChannel from './fetchChannel';
-
 const choseChannel = (e) => {
     e.preventDefault();
     localStorage.removeItem('chosen_channel');
 
-    const formValue = document.getElementById('channelForm').elements;
+    require([
+        "fetchChannel.js",
+        "sortBtnHandler.js",
+        "loadCSS.js"
+    ], function (fetchNewsChannel, sortBtnHandler, loadCSS) {
+        const fetchChannel = fetchNewsChannel.default;
+        const sortButton = sortBtnHandler.default;
+        const loadCSSHandler = loadCSS.default;
+        const formValue = document.getElementById('channelForm').elements;
+        const btnSort = document.getElementsByClassName('button-sort');
+        const buttons = Array.from(btnSort);
+        const channel = formValue[0].value;
 
-    const channel = formValue[0].value;
+        loadCSSHandler('search-results');
 
-    localStorage.setItem('chosen_channel', channel);
+        localStorage.setItem('chosen_channel', channel);
 
-    fetchNewsChannel({channelName:channel});
+        buttons.map( item => {
+            item.addEventListener('click', sortButton)
+        });
+
+        fetchChannel({channelName:channel});
+    });
 };
 
 

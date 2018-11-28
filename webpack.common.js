@@ -6,14 +6,18 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: ["@babel/polyfill", 'whatwg-fetch', './src/index.js'],
-    devServer: {
-        contentBase: './dist',
-        hot: true
+    resolveLoader: {
+        modules: ['node_modules'],
+    },
+    node: {
+        fs: 'empty',
+        module: 'empty',
+        define: 'empty'
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'Hot Module Replacement'
+            title: 'Common'
         }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
@@ -25,6 +29,15 @@ module.exports = {
     ],
     module: {
         rules: [
+            {
+                test: /\.json$/,
+                use: [
+                    {
+                        loader: path.resolve('./src/loader/index.js'),
+                    }
+                ]
+            }
+            ,
             {
                 test: /\.m?js$/,
                 exclude: /(node_modules|bower_components)/,
@@ -78,7 +91,7 @@ module.exports = {
         modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
     output: {
-        filename: 'main.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     }
 };
