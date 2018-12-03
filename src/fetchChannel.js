@@ -1,6 +1,6 @@
-import {createResultNodes} from './createNodes';
+import { createResultNodes } from './createNodes';
 
-const fetchNewsChannel = ({ channelName, sortBy = 'publishedAt', endpoint = 'everything', number = 10}) => {
+async function fetchNewsChannel({ channelName, sortBy = 'publishedAt', endpoint = 'everything', number = 10}) {
     if (!channelName) {
         return false;
     }
@@ -8,33 +8,37 @@ const fetchNewsChannel = ({ channelName, sortBy = 'publishedAt', endpoint = 'eve
     const apiKey = 'afc39ad1a17c44038da1608b7110a0cf';
 
     const body = `${endpoint}?q=${channelName}&sortBy=${sortBy}&pageSize=${number}&apiKey=${apiKey}`;
+    const url =  'https://newsapi.org/v2/';
+    const fetch = FetchFactory.create('GET');
 
-    fetchNews('https://newsapi.org/v2/', body, 'get');
-};
+    const jsonData = await fetch.send(url+body);
+    createResultNodes(jsonData);
+}
 
+class FetchFactory {
+    constructor(request) {
+        this.request = request;
+    }
 
-const checkResponse = (response) => {
-    if (response.ok) {
+    static create(request) {
+        this.request = request;
+        return this;
+    }
+
+    static async send(url) {
+        const response = await fetch(url, { method: this.request })
+            .catch(async (error) => {
+                const modalWindow = await import('./modal/modal');
+                modalWindow.default.render(error);
+            });
         return response.json();
     }
-    throw new Error('Network response was not ok.');
-};
+}
 
-
-const fetchNews = async (url, body, method) => {
-    let data;
-    let jsonData;
-
-    try {
-        data = await fetch(`${url}${body}`, {
-            method: method
-        });
-    } catch (e) {
-        throw new Error(e);
+const FetchRequest = new Proxy(fetchNewsChannel, {
+    apply: function(target, thisArg, argumentsList) {
+        return target.apply(thisArg, argumentsList);
     }
+});
 
-    jsonData = await checkResponse(data);
-    createResultNodes(jsonData);
-};
-
-export default fetchNewsChannel;
+export default FetchRequest;
