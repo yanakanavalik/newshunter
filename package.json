@@ -8,7 +8,9 @@
     "watch": "webpack --config webpack.common.js --watch",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js --progress --profile --colors",
-    "dev": "webpack --config webpack.dev.js --progress --profile --colors "
+    "dev": "webpack --config webpack.dev.js --progress --profile --colors ",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -59,11 +61,13 @@
     "resolve-url-loader": "^3.0.0",
     "unfetch": "^4.0.1",
     "whatwg-fetch": "^3.0.0",
-    "xstyle": "^0.3.2"
+    "xstyle": "^0.3.2",
+    "snyk": "^1.189.0"
   },
   "browserslist": [
     "last 2 versions",
     "> 1%",
     "not ie <= 10"
-  ]
+  ],
+  "snyk": true
 }
