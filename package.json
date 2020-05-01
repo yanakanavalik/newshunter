@@ -8,7 +8,9 @@
     "watch": "webpack --config webpack.common.js --watch",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js --progress --profile --colors",
-    "dev": "webpack --config webpack.dev.js --progress --profile --colors "
+    "dev": "webpack --config webpack.dev.js --progress --profile --colors ",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -50,7 +52,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "fs": "0.0.1-security",
     "html-webpack-plugin": "^3.2.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "json-schema-ref-parser": "^6.0.2",
     "loader-utils": "^1.1.0",
     "popper": "^1.0.1",
@@ -59,11 +61,13 @@
     "resolve-url-loader": "^3.0.0",
     "unfetch": "^4.0.1",
     "whatwg-fetch": "^3.0.0",
-    "xstyle": "^0.3.2"
+    "xstyle": "^0.3.2",
+    "snyk": "^1.316.1"
   },
   "browserslist": [
     "last 2 versions",
     "> 1%",
     "not ie <= 10"
-  ]
+  ],
+  "snyk": true
 }
