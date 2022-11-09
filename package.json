@@ -52,7 +52,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jquery": "^3.3.1",
     "json-schema-ref-parser": "^6.0.2",
-    "loader-utils": "^1.1.0",
+    "loader-utils": "^1.4.1",
     "popper": "^1.0.1",
     "popper.js": "^1.14.3",
     "requirejs": "^2.3.6",
